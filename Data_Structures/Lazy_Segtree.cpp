@@ -18,6 +18,7 @@ void update(int id,int l,int r,int x,int y,int val){
         lazy[id]=0;
         update(id<<1,l,mid,x,y,val);
         update(id<<1|1,mid+1,r,x,y,val);
+        segtree[id]=max(segtree[id<<1],segtree[id<<1|1]);
     }
 }
 int query(int id,int l,int r,int x,int y){
