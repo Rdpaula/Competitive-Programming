@@ -10,7 +10,7 @@ ll fastpow(ll a, ll b){
     return calc;
 }
 ll soma(ll a,ll b){
-    if(a+b>MOD)return a+b-MOD;
+    if(a+b>=MOD)return a+b-MOD;
     else return a+b;
 }
 ll subt(ll a,ll b){
