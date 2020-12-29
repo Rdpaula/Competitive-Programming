@@ -17,7 +17,7 @@ void dfs(int x){
             dfs(e);
         }
         if(vis[e]==1){
-            dfs_low[x]=min(dfs_low[x],dfs_low[e]);
+            dfs_low[x] = min(dfs_low[x],dfs_low[e]);
         }
     }
     if(dfs_low[x]==dfs_num[x]){
@@ -25,9 +25,9 @@ void dfs(int x){
         while(1){
             int vert = sccs.back();
             sccs.pop_back();
-            vis[vert]=0;
+            vis[vert] = 0;
             anses[contans].push_back(vert);
-            if(vert==x)break;
+            if(vert == x)break;
         }
     }
 }

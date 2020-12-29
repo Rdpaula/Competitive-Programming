@@ -5,7 +5,7 @@ ll fastpow(ll a, ll b){
     ll calc=1;
     for(;b>=1LL;b/=2LL){
         if((b&1LL))calc=mult(calc,a);
-        a=mult(a,a);
+        if(b!=1)a=mult(a,a);
     }
     return calc;
 }
