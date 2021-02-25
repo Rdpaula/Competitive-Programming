@@ -2,6 +2,13 @@
 /// to exist path 0 or 2 vertex odd degree and they will the ini and the end, start EulerTour in one of them
 
 /// this is implemented for directed graphs, for undirected mark the reversed edge(second parameter of the pair) and remove in the same way
+
+vector<int> ans;
+vector<pair<int,bool> > adj[maxn];
+int dege[maxn],degs[maxn];
+int vis[maxn];
+int ini = -1;
+
 bool verify(){
     bool can = true;
     ll dif = 0;
