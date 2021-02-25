@@ -1,7 +1,7 @@
 /// remind the conditions to exist a cicle tour -> even graph
 /// to exist path 0 or 2 vertex odd degree and they will the ini and the end, start EulerTour in one of them
 
-/// this is implemented for directed graphs, for undirected implement with multiset O(mlogm) or catch in cp algorithms for O(m) but more memory
+/// this is implemented for directed graphs, for undirected mark the reversed edge(second parameter of the pair) and remove in the same way
 bool verify(){
     bool can = true;
     ll dif = 0;
