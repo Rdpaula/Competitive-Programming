@@ -33,27 +33,31 @@ void init(){
     }
 }
 
-void compute_hash(vector<ll> &hash_value, string const& s) {
+void compute_hash(vector<ll> &hash_value, string const& st) {
     hash_value[0] = 0;
     ll p_pow = 1;
     
     int cont=1;
     
-    for (char c : s) {
+    for (char c : st) {
         hash_value[cont] = (hash_value[cont-1] + (c - '$' + 1) * p_pow) % m;
         p_pow = (p_pow * p) % m;
         cont++;
     }
 }
-void compute_hash2(vector<ll> &hash_value2,string const& s) {
+void compute_hash2(vector<ll> &hash_value2,string const& st) {
     hash_value2[0] = 0;
     ll p_pow = 1;
 
     int cont=1;
     
-    for (char c : s) {
+    for (char c : st) {
         hash_value2[cont] = (hash_value2[cont-1] + (c - '$' + 1) * p_pow) % m;
         p_pow = (p_pow * p) % m;
         cont++;
     }
+}
+
+ll query(int l, int r){ /// 1-indexed
+    return (((hash_valuen[r] - hash_valuen[l-1]+m)%m)*inv[l])%m;
 }

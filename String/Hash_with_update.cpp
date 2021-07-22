@@ -54,8 +54,8 @@ void update(int idx, char now, char old = '$'){
         }
     }
 }
-void getHash(string s){
-    for(int i = 1; i <= s.size(); i++) update(i, s[i-1]);
+void getHash(string st){
+    for(int i = 1; i <= st.size(); i++) update(i, st[i-1]);
 }
 
 ll query(int idx){
@@ -64,7 +64,7 @@ ll query(int idx){
     return hash;
 }
 
-ll query(int l, int r){
+ll query(int l, int r){ /// 1-indexed
     return (((query(r)-query(l-1)+ mod[0])%mod[0])*inv[l])%mod[0];
 }
 int main(){
