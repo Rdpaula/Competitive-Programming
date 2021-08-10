@@ -55,7 +55,7 @@ void update(int idx, char now, char old = '$'){
     }
 }
 void getHash(string st){
-    for(int i = 1; i <= st.size(); i++) update(i, st[i-1]);
+    for(int i = 1; i <= sz(st); i++) update(i, st[i-1]);
 }
 
 ll query(int idx){
