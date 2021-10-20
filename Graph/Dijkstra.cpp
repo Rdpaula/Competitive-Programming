@@ -1,13 +1,5 @@
-#include<bits/stdc++.h>
-#define pi 3.1415  
-#define ll long long
-#define pii pair<ll,ll>
-#define debug(a) cout<<a<<'\n'
-#define maxn 50009
-#define MOD 1000000007
-using namespace std;
 const ll INF = 1e15 + 9;
-ll n,m;
+
 vector<pii> adj[maxn];
 ll dis[maxn];
 void addedge(ll a,ll b,ll c){
@@ -15,7 +7,7 @@ void addedge(ll a,ll b,ll c){
     adj[b].push_back({a,c});
 }
 void INFINITAR(){
-    for(ll i=0;i<=n;i++){
+    for(ll i=0;i<maxn;i++){
         dis[i]=INF;
     }
 }
@@ -39,4 +31,4 @@ void dijkstra(int x){
 int main(){
     ios::sync_with_stdio(false);
     return 0;
-}   
+}
