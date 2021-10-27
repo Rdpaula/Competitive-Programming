@@ -5,7 +5,7 @@ using namespace __gnu_pbds;
 
 typedef
 tree<
-  ll,	//type of data
+  ll,	//type of data pair<ll,ll> if multiset
   null_type, //null if set key ->data type if we want map (use ->first ->second) finds is on keys
   greater<ll>, /// greater<pair<int,int>> if multiset (elem,id)
   rb_tree_tag,
