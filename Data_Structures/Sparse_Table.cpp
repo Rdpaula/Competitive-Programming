@@ -17,7 +17,3 @@ ll query(int a, int b) {
 
     return min(sptable[lg][a], sptable[lg][b -(1 << lg)+1]);
 }
-
-int main(){
-    return 0;
-}
