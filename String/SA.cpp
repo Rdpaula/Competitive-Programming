@@ -17,7 +17,7 @@ void count_sort(vector<ll> &p, vector<ll> &c){
     p = newp;
 }
 
-vector<ll> suff_array(string &s){
+void suff_array(string &s, vector<ll> &sa, vector<ll> &lcp){
     s += '$';
     ll n = sz(s);    
     // first pass
@@ -56,5 +56,16 @@ vector<ll> suff_array(string &s){
         c = newc;
         pot++;
     }
-    return p;
+
+    lcp = vector<ll>(n);
+    ll act = 0;
+    rep(i,0,n-1){
+        ll pi = c[i];
+        ll j = p[pi-1];
+
+        while(s[i + act] == s[j + act]) act++;
+        lcp[pi-1] = act;
+        act = max(act - 1, 0LL);
+    }
+    sa = p;
 }
