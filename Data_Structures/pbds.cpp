@@ -7,7 +7,7 @@ typedef
 tree<
   ll,	//type of data pair<ll,ll> if multiset
   null_type, //null if set key ->data type if we want map (use ->first ->second) finds is on keys
-  greater<ll>, /// greater<pair<int,int>> if multiset (elem,id)
+  less<ll>, /// less<pair<int,int>> if multiset (elem,id), order_of_key = lower_bound, if want greater elements first use negative values
   rb_tree_tag,
   tree_order_statistics_node_update>
 ordered_set;
