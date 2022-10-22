@@ -1,4 +1,6 @@
 ll vet[maxn],segt[4*maxn];
+
+//take care with int 
 void build(int id ,int l,int r){
     if(l == r) segt[id] = vet[l];
     else{
