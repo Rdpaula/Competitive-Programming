@@ -1,15 +1,15 @@
-int cnt[maxn];
+ll cnt[maxn];
 bool big[maxn];
 
-void add(int v, int p, int x){
+void add(ll v, ll p, ll x){
     cnt[ col[v] ] += x;
     for(auto u: g[v]){
         if(u != p && !big[u]) add(u, v, x)
     }
 }
 
-void dfs(int v, int p, bool keep){
-    int mx = -1, bigChild = -1;
+void dfs(ll v, ll p, bool keep){
+    ll mx = -1, bigChild = -1;
 
     for(auto u : g[v]){
        if(u != p && sz[u] > mx)
@@ -28,5 +28,13 @@ void dfs(int v, int p, bool keep){
 
     if(bigChild != -1) big[bigChild] = 0;
     if(keep == 0) add(v, p, -1);
+}
+
+ll calc(ll x, ll pai){
+    ll ret = 1;
+    for(auto e: g[x]){
+        if(e!=x) ret += calc(e,x);
+    }
+    return sz[x] = ret;
 }
 
