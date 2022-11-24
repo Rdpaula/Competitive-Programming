@@ -19,13 +19,13 @@ void dijkstra(int x){
     while(!pq.empty()){
         auto f = pq.top();
         ll vert = f.second;
-        ll disand = f.first
+        ll disand = f.first;
         pq.pop();
 
         if(dis[vert] < disand) continue;
         for(auto e: adj[vert]){
             ll to_vert = e.first;
-            ll wei = e.second
+            ll wei = e.second;
 
             if(disand + wei < dis[to_vert]){
                 dis[to_vert] = disand + wei;
