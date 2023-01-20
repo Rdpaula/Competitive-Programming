@@ -1,37 +1,47 @@
-/// remind the conditions to exist a cicle tour -> even graph and ALL EDGES in same component = adj completely erased
-/// to exist path 0 or 2 vertex odd degree and they will the ini and the end, start EulerTour in one of them
+///ALL EDGES in same component = adj completely erased
+/// to exist path 0 or 2 vertex odd degree and they will the ini and the end, start EulerTour in one of them INDIREC
+/// to exist path 1 vertex with indg greater and other with outdg greater will be end and begin respectively DIRECT
 
-/// this is implemented for directed grapsh
+/// this is implemented for directed graphs
 
-vector<int> ans;
-vector<pair<int,bool> > adj[maxn];
-int dege[maxn],degs[maxn];
-int vis[maxn];
-int ini = -1;
+ll n,m;
+vector<ll> adj[maxn];
+ll indg[maxn];
+ll outdg[maxn];
+vector<ll> ans;
 
-bool verify(){
+// rests to see if ALL EDGES belong to the same component = adj completely erased
+ll verify(){ // 0 - both impossible, 1 - path, 2 - tour(aka path to the same node)
+    ll ins = 0;
+    ll outs = 0;
     bool can = true;
-    ll dif = 0;
-    for(int i = 1; i <= n; i++){
-        ll sald = degs[i] - dege[i];
-        if(abs(sald) > 1)can = false;
+    rep(i,0,maxn){
+        if(indg[i] > outdg[i]) ins++;
+        else if(indg[i] < outdg[i]) outs++;
+
+        if(abs(indg[i] - outdg[i]) > 1) can = false;
+    }
+    if(!can || !((ins == 0 && outs == 0) || (ins == 1 && outs == 1))) return 0;
+    else if(ins == 1 && outs == 1) return 1;
+    else return 2;
+}
+
+void tour(ll x){
+    stack<ll> st;
+    st.push(x);
+    while(!st.empty()){
+        auto tp = st.top();
+        if(sz(adj[tp])){
+            st.push(adj[tp].back());
+            adj[tp].pop_back();
+        }
         else{
-            if(sald > 0)ini = i;
-            if(abs(sald)!=0)dif++;
+            ans.pb(tp);
+            st.pop();
         }
     }
-    return can && (dif == 2 || dif == 0);
 }
 
-void EulerTour(int x){
-    vis[x] = 1; 
-    while(sz(adj[x])){
-        auto f = adj[x].back();
-        adj[x].pop_back();
-        EulerTour(f.first);
-    }
-    ans.push_back(x);
-}
 
 // undirected graphs -> can be improved with hashmap
 
@@ -41,7 +51,7 @@ vector<ll> ans;
 map<pii,ll> apag;
 
 // rests to see if ALL EDGES belong to the same component = adj completely erased
-ll verify(){ // 0 - both impossible, 1 - path, 2 - tour
+ll verify(){ // 0 - both impossible, 1 - path, 2 - tour(aka path to the same node)
     ll odd = 0;
     rep(i,0,maxn){
         if(sz(adj[i])&1) odd++;
