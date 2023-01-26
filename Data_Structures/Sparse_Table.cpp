@@ -1,8 +1,8 @@
 #define LG 20
-ll N,a[maxn], sptable[LG][maxn];
+ll N,vet[maxn], sptable[LG][maxn];
 ///Thanks AmandioF
 void build() {
-    for(int i=0;i<N;i++) sptable[0][i] = a[i];
+    for(int i=0;i<N;i++) sptable[0][i] = vet[i];
 
     for(int i = 1; (1 << i) <= N; i++){
         for(int j=0; j + (1 << i) <= N; j++){
