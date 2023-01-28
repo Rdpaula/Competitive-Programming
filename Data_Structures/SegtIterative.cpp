@@ -1,6 +1,8 @@
-ll n; // vet is 0-indexed, set MAXN to power of 2(2^18 for 2*10^5 constant) and fill tree with neutral values
-ll tree[2*maxn]; 
- 
+// vet is 0-indexed, set N to power of 2(2^18 for 2*10^5 constant) and segt has size 2*N
+// Use N as your vet size and fill empty spaces with neutral values
+const ll N = 1<<18;
+ll tree[2*N]; 
+
 ll query(ll l, ll r){
     l += n, r += n;
     ll ret = INF;
@@ -20,4 +22,3 @@ void update(ll pos, ll val){
         tree[pos] = min(tree[pos<<1], tree[pos<<1|1]);
     }
 }
-
