@@ -4,7 +4,7 @@ const ll N = 1<<18;
 ll tree[2*N]; 
 
 ll query(ll l, ll r){
-    l += n, r += n;
+    l += N, r += N;
     ll ret = INF;
     while(l <= r){
        if(l&1) ret = min(ret, tree[l++]); 
@@ -16,7 +16,7 @@ ll query(ll l, ll r){
 }
  
 void update(ll pos, ll val){
-    pos += n;
+    pos += N;
     tree[pos] = val;
     for(pos >>=1; pos >= 1; pos >>=1){
         tree[pos] = min(tree[pos<<1], tree[pos<<1|1]);
