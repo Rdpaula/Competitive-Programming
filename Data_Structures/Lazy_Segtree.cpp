@@ -2,11 +2,11 @@ ll vet[maxn],segt[4*maxn],lazy[4*maxn];
 
 #define NEUTRAL -1
 
-void add(int id,int l,int r,int val){
+void add(ll id,ll l,ll r,ll val){
     // cout<<l<<" "<<r<<" "<<val<<endl;
     segt[id] = val,lazy[id] = val;
 }
-void update(ll id,int l,ll r,ll x,ll y,ll val){
+void update(ll id,ll l,ll r,ll x,ll y,ll val){
     if(x<=l && r<=y)add(id,l,r,val);
     else if(l>y || r<x)return;
     else{
