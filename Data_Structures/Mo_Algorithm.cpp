@@ -1,6 +1,3 @@
-#define INF 1e18+9
-#define endl '\n'
-
 void remove(idx);  // TODO: remove value at idx from data structure
 void add(idx);     // TODO: add value at idx from data structure
 int get_answer();  // TODO: extract the current answer of the data structure
