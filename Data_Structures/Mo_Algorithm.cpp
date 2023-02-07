@@ -1,13 +1,11 @@
+ll ans = 0;
+vector<ll> vet;
+
 void remove(idx);  // TODO: remove value at idx from data structure
 void add(idx);     // TODO: add value at idx from data structure
 int get_answer();  // TODO: extract the current answer of the data structure
 
 int block_size;
-
-ll cnt[maxn];
-ll ans = 0;
-
-vector<ll> vet;
 
 struct Query {
     int l, r, idx;
