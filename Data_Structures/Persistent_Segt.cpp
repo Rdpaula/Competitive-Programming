@@ -1,35 +1,35 @@
 struct Vertex {
     Vertex *l, *r;
-    int sum;
+    ll sum;
 
-    Vertex(int val) : l(nullptr), r(nullptr), sum(val) {}
+    Vertex(ll val) : l(nullptr), r(nullptr), sum(val) {}
     Vertex(Vertex *l, Vertex *r) : l(l), r(r), sum(0) {
         if (l) sum += l->sum;
         if (r) sum += r->sum;
     }
 };
 
-Vertex* build(int a[], int tl, int tr) {
+Vertex* build(vector<ll> &a, ll tl, ll tr) {
     if (tl == tr)
         return new Vertex(a[tl]);
-    int tm = (tl + tr) / 2;
+    ll tm = (tl + tr) / 2;
     return new Vertex(build(a, tl, tm), build(a, tm+1, tr));
 }
 
-int get_sum(Vertex* v, int tl, int tr, int l, int r) {
+ll get_sum(Vertex* v, ll tl, ll tr, ll l, ll r) {
     if (l > r)
         return 0;
     if (l == tl && tr == r)
         return v->sum;
-    int tm = (tl + tr) / 2;
+    ll tm = (tl + tr) / 2;
     return get_sum(v->l, tl, tm, l, min(r, tm))
          + get_sum(v->r, tm+1, tr, max(l, tm+1), r);
 }
 
-Vertex* update(Vertex* v, int tl, int tr, int pos, int new_val) {
+Vertex* update(Vertex* v, ll tl, ll tr, ll pos, ll new_val) {
     if (tl == tr)
         return new Vertex(new_val);
-    int tm = (tl + tr) / 2;
+    ll tm = (tl + tr) / 2;
     if (pos <= tm)
         return new Vertex(update(v->l, tl, tm, pos, new_val), v->r);
     else
