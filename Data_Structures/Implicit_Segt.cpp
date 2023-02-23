@@ -1,22 +1,22 @@
 struct Vertex {
-    int left, right;
-    int sum = 0;
+    ll left, right;
+    ll sum = 0;
     Vertex *left_child = nullptr, *right_child = nullptr;
 
-    Vertex(int lb, int rb) {
+    Vertex(ll lb, ll rb) {
         left = lb;
         right = rb;
     }
 
     void extend() {
         if (!left_child && left < right) {
-            int t = (left + right) / 2;
+            ll t = (left + right) / 2;
             left_child = new Vertex(left, t);
             right_child = new Vertex(t + 1, right);
         }
     }
 
-    void add(int k, int x) {
+    void add(ll k, ll x) {
         extend();
         sum += x;
         if (left_child) {
@@ -27,7 +27,7 @@ struct Vertex {
         }
     }
 
-    int get_sum(int lq, int rq) {
+    ll get_sum(ll lq, ll rq) {
         if (lq <= left && right <= rq)
             return sum;
         if (max(left, lq) > min(right, rq))
