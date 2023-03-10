@@ -3,20 +3,20 @@ bool big[maxn];
 
 void add(ll v, ll p, ll x){
     cnt[ col[v] ] += x;
-    for(auto u: g[v]){
-        if(u != p && !big[u]) add(u, v, x)
+    for(auto u: adj[v]){
+        if(u != p && !big[u]) add(u, v, x);
     }
 }
 
 void dfs(ll v, ll p, bool keep){
     ll mx = -1, bigChild = -1;
 
-    for(auto u : g[v]){
+    for(auto u : adj[v]){
        if(u != p && sz[u] > mx)
           mx = sz[u], bigChild = u;
     }
 
-    for(auto u : g[v]){
+    for(auto u : adj[v]){
         if(u != p && u != bigChild)
             dfs(u, v, 0);  // run a dfs on small childs and clear them from cnt
     }
@@ -32,8 +32,8 @@ void dfs(ll v, ll p, bool keep){
 
 ll calc(ll x, ll pai){
     ll ret = 1;
-    for(auto e: g[x]){
-        if(e!=x) ret += calc(e,x);
+    for(auto e: adj[x]){
+        if(e!=pai) ret += calc(e,x);
     }
     return sz[x] = ret;
 }
