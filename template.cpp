@@ -29,19 +29,21 @@ using namespace std;
 #else
 #define debug(...) 42
 #endif
- 
-#define INF 1e18+9
+
+ll INF = (ll)1e18 + 9;
+
 #define endl '\n'
 
 void solvetask(){
-    
+
 }
  
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
     int t = 1;
-//    cin>>t;
+    cin>>t;
     while(t--) solvetask();
     return 0;
 }
+
