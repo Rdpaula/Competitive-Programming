@@ -3,7 +3,7 @@
 
 template<class T> struct pt {
     T x, y;
-    pt(T x = 0, T y = 0) : x(x), y(y) {}
+    pt(T _x = 0, T _y = 0) : x(_x), y(_y) {}
     bool operator < (pt p) const { return tie(x, y) < tie(p.x, p.y); }
     bool operator == (pt p) const { return tie(x, y) == tie(p.x, p.y); }
     pt operator + (pt p) const { return pt(x + p.x, y + p.y); }
@@ -24,16 +24,22 @@ template<class T> struct pt {
         return is >> p.x >> p.y;
     }
 };
+
 template<typename U, typename T>
 U& operator >> (U& is, pt<T> &p) {
     T x, y; is >> x >> y;
     p = pt(x, y);
     return is;
 }
+
 template<class T> int sgn(T x) { return (x > 0) - (x < 0); }
 
 template<class T> bool on_segment(T a, T b, T p) {
     return p.cross(a, b) == 0 && (a - p).dot(b - p) <= 0;
+}
+
+template<class T> int segment_points(T a, T b, int isPolygon = 0){
+    return __gcd(abs(b.y - a.y), abs(b.x - a.x)) + (1 - isPolygon);
 }
 
 template<class T> vector<T> seg_int(T a, T b, T c, T d) {

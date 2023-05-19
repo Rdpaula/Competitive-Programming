@@ -9,3 +9,14 @@ template<class T> bool in_polygon(vector<T> &a, T p, bool strict = true) {
     }
     return ans;
 }
+
+template<class T> T polygon_area(vector<pt<T>> &points){
+    int tam = points.size();
+    T ans = 0;
+    pt<T> zero(0,0);
+    
+    for(int i = 0; i < tam; i++){
+        ans += zero.cross(points[i], points[(i+1)%tam]);
+    }
+    return abs(ans)/2;
+}
