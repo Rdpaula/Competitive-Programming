@@ -20,9 +20,9 @@ template<class T> struct pt {
     friend ostream& operator << (ostream &os, pt p) {
         return os << "(" << p.x << ", " << p.y << ")";
     }
-    friend std::istream& operator >> (std::istream &is, PT &p) {
-		return is >> p.x >> p.y;
-	}
+    friend istream& operator >> (istream &is, pt &p) {
+        return is >> p.x >> p.y;
+    }
 };
 template<typename U, typename T>
 U& operator >> (U& is, pt<T> &p) {
