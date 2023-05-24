@@ -54,3 +54,25 @@ template<class T> vector<T> seg_int(T a, T b, T c, T d) {
     if (on_segment(a, b, d)) s.insert(d);
     return {s.begin(), s.end()};
 }
+
+template<class T> T closest_pair(vector<pt<T>> &vet){
+    sort(all(vet));
+    set<pt<ll>> st;
+    ll menorDist = 9e18;
+    int j = 0;
+    rep(i,0,sz(vet)){
+       ll d = ceil(sqrt(menorDist));
+       while(j < i && d <= vet[i].x - vet[j].x){
+           st.erase(pt<ll>(vet[j].y, vet[j].x));
+           j++;
+       }
+       auto ini = st.lower_bound(pt<ll>(vet[i].y - d, vet[i].x));
+       auto fim = st.upper_bound(pt<ll>(vet[i].y + d, vet[i].x));
+       for(;ini != fim; ini++){
+           pt<ll> act = *ini;
+           menorDist = min(menorDist, pt<ll>(vet[i].x - act.y, vet[i].y - act.x).dist());
+       }
+       st.insert(pt<ll>(vet[i].y, vet[i].x));
+    }
+    return menorDist;
+}
