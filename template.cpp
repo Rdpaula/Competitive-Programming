@@ -21,8 +21,11 @@
 #define pb push_back
 #define eb emplace_back 
 #define pf push_front
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
+
 using namespace std;
- 
+
 #ifdef LOCAL
 #include "debug.h"
 #define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
