@@ -4,7 +4,6 @@ vector<pii> adj[maxn];
 ll dis[maxn];
 void addedge(ll a,ll b,ll c){
     adj[a].push_back({b,c});
-    adj[b].push_back({a,c});
 }
 void INFINITAR(){
     for(ll i = 0; i < maxn; i++){
