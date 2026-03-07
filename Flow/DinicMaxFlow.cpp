@@ -11,7 +11,6 @@ struct Dinic {
     int n, m = 0;
     int s, t;
     vector<int> level, ptr;
-    queue<int> q;
 
     Dinic(int n, int s, int t) : n(n), s(s), t(t) {
         adj.resize(n);
@@ -27,7 +26,11 @@ struct Dinic {
         m += 2;
     }
 
+    // Performance: q is local — no stale entries from a previous failed phase
+    // can corrupt the level graph, and the queue memory is released after BFS.
     bool bfs() {
+        queue<int> q;
+        q.push(s);
         while (!q.empty()) {
             int v = q.front();
             q.pop();
@@ -68,7 +71,6 @@ struct Dinic {
         while (true) {
             fill(level.begin(), level.end(), -1);
             level[s] = 0;
-            q.push(s);
             if (!bfs())
                 break;
             fill(ptr.begin(), ptr.end(), 0);

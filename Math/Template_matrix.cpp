@@ -25,55 +25,32 @@ ll sub(ll a,ll b){
     else return a-b;
 }
 
+// Performance: single flat 1D allocation instead of pointer-to-pointer.
+// Eliminates per-row heap allocations and improves cache locality.
 struct Matrix {
-    ll **m, rows, cols;
+    vector<ll> m;
+    int rows, cols;
 
-    void init() {
-        m = new ll*[rows];
-        for(ll i = 0; i < rows; i++)
-            m[i] = new ll[cols];
-    }
+    ll& at(int i, int j)             { return m[i * cols + j]; }
+    const ll& at(int i, int j) const { return m[i * cols + j]; }
 
-    void clean() {
-        for(int i = 0; i < rows; i++)
-            delete [] m[i];
-        delete [] m;
-    }
-    
     void ident() {
-        for(int i = 0; i < min(rows,cols); i++)
-            m[i][i] = 1;
+        for(int i = 0; i < min(rows, cols); i++)
+            at(i, i) = 1;
     }
 
-    Matrix(int row, int col) : rows(row), cols(col) {
-        init();
-        for(int i = 0; i < rows; i++)
-            memset(m[i], 0, cols * sizeof(ll));
-    }
+    Matrix(int row, int col) : rows(row), cols(col), m(row * col, 0LL) {}
 
-    Matrix(const Matrix &o) : rows(o.rows), cols(o.cols) {
-        init();
-        for(int i = 0; i < rows; i++)
-            memcpy(m[i], o.m[i], cols * sizeof(ll));
-    }
-
-    Matrix& operator = (const Matrix &o) {
-        clean();
-        rows = o.rows;
-        cols = o.cols;
-        init();
-        for(int i = 0; i < rows; i++)
-            memcpy(m[i], o.m[i], cols * sizeof(ll));
-        return *this;
-    }
-
-    Matrix operator % (Matrix o) const {
+    // Performance: i,k,j loop order — inner loop accesses res and o rows
+    // sequentially, avoiding cache misses on the transposed dimension.
+    Matrix operator % (const Matrix& o) const {
         assert(cols == o.rows);
-        Matrix res = Matrix(rows, o.cols);
+        Matrix res(rows, o.cols);
         for(int i = 0; i < rows; i++) {
-            for(int j = 0; j < o.cols; j++) {
-                for(int k = 0; k < cols; k++) {
-                    res.m[i][j] = add(res.m[i][j], mul(m[i][k], o.m[k][j]));
+            for(int k = 0; k < cols; k++) {
+                if(m[i * cols + k] == 0) continue; // skip zero entries
+                for(int j = 0; j < o.cols; j++) {
+                    res.at(i, j) = add(res.at(i, j), mul(m[i * cols + k], o.m[k * o.cols + j]));
                 }
             }
         }
@@ -81,7 +58,7 @@ struct Matrix {
     }
 
     Matrix operator ^ (ll exp) const {
-        Matrix res = Matrix(rows, cols), base = *this;
+        Matrix res(rows, cols), base = *this;
         res.ident();
 
         while(exp) {
@@ -91,8 +68,6 @@ struct Matrix {
         }
         return res;
     }
-
-    ~Matrix() {clean();}
 };
 
 int main() {

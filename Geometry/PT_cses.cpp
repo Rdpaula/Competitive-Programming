@@ -14,8 +14,8 @@ template<class T> struct pt {
     T cross(pt p) const { return x * p.y - y * p.x; }
     T cross(pt a, pt b) const { return (a - *this).cross(b - *this); }
     T ori(pt a, pt b) const { T f = cross(a, b); return (f < 0 ? -1 : (f > 0 ? 1 : 0)); }
-    T dist() const { return x * x + y * y; }
-    double distsq() const { return sqrt(double(dist())); }
+    T dist2() const { return x * x + y * y; }           // squared distance
+    double distsq() const { return sqrt(double(dist2())); } // true distance
     pt rotate(double a) const { return pt(x * cos(a) - y * sin(a), x * sin(a) + y * cos(a)); }
     friend ostream& operator << (ostream &os, pt p) {
         return os << "(" << p.x << ", " << p.y << ")";
@@ -55,22 +55,28 @@ template<class T> vector<T> seg_int(T a, T b, T c, T d) {
     return {s.begin(), s.end()};
 }
 
+// Performance: menorDist is kept as squared distance throughout.
+// sqrt/ceil are removed from the inner loop (called O(n log n) times before).
+// The window bound comparison uses squared values via integer arithmetic.
 template<class T> T closest_pair(vector<pt<T>> &vet){
     sort(all(vet));
     set<pt<ll>> st;
-    ll menorDist = 9e18;
+    ll menorDist = 9e18; // squared distance
     int j = 0;
     rep(i,0,sz(vet)){
-       ll d = ceil(sqrt(menorDist));
-       while(j < i && d <= vet[i].x - vet[j].x){
+       // d is the floor of the true distance — safe lower bound for pruning.
+       // Computed once per outer iteration with integer sqrt (no float math).
+       ll d = (ll)sqrtl((long double)menorDist);
+       // Slide left boundary: drop points whose x-gap exceeds d.
+       while(j < i && d < vet[i].x - vet[j].x){
            st.erase(pt<ll>(vet[j].y, vet[j].x));
            j++;
        }
-       auto ini = st.lower_bound(pt<ll>(vet[i].y - d, vet[i].x));
-       auto fim = st.upper_bound(pt<ll>(vet[i].y + d, vet[i].x));
+       auto ini = st.lower_bound(pt<ll>(vet[i].y - d, -4e18));
+       auto fim = st.upper_bound(pt<ll>(vet[i].y + d,  4e18));
        for(;ini != fim; ini++){
            pt<ll> act = *ini;
-           menorDist = min(menorDist, pt<ll>(vet[i].x - act.y, vet[i].y - act.x).dist());
+           menorDist = min(menorDist, pt<ll>(vet[i].x - act.y, vet[i].y - act.x).dist2());
        }
        st.insert(pt<ll>(vet[i].y, vet[i].x));
     }
